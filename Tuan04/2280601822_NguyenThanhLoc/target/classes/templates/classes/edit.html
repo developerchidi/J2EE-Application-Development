@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sửa Lớp học</title>
+</head>
+<body>
+<h2>Sửa Lớp học</h2>
+<form th:action="@{'/classes/edit/' + ${studentClass.id}}" th:object="${studentClass}" method="post">
+    <label>Tên Lớp học:</label>
+    <input type="text" th:field="*{name}" required />
+    <label>Môn học:</label>
+    <select th:field="*{subjectId}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}" th:selected="${subject.id == studentClass.subjectId}"></option>
+    </select>
+    <button type="submit">Cập nhật</button>
+    <a th:href="@{/classes}">Quay lại</a>
+</form>
+</body>
+</html> 

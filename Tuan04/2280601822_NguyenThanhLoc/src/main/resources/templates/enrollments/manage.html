@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Đăng ký học của Sinh viên</title>
+</head>
+<body>
+<h2>Quản lý Đăng ký học của Sinh viên</h2>
+<form th:action="@{/enrollments/update}" method="post">
+    <label>Chọn sinh viên:</label>
+    <select name="studentId" th:field="*{studentId}" th:onchange="window.location.href='/enrollments/manage/' + this.value">
+        <option value="">-- Vui lòng chọn --</option>
+        <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.lastName + ' ' + student.firstName}" th:selected="${student.id == student?.id}"></option>
+    </select>
+    <div th:if="${student != null}">
+        <h3>Đăng ký cho sinh viên: <span th:text="${student.lastName + ' ' + student.firstName}"></span></h3>
+        <table>
+            <tr>
+                <td>
+                    <b>Các lớp học hiện có</b><br/>
+                    <select id="availableClasses" multiple size="10">
+                        <option th:each="cls : ${availableClasses}" th:value="${cls.id}" th:text="${cls.name}"></option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" onclick="moveSelected('availableClasses','enrolledClasses')">&gt;</button><br/>
+                    <button type="button" onclick="moveSelected('enrolledClasses','availableClasses')">&lt;</button>
+                </td>
+                <td>
+                    <b>Các lớp đã đăng ký</b><br/>
+                    <select id="enrolledClasses" name="classIds" multiple size="10">
+                        <option th:each="cls : ${enrolledClasses}" th:value="${cls.id}" th:text="${cls.name}"></option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Lưu thay đổi</button>
+        <a th:href="@{/enrollments}">Quay lại</a>
+    </div>
+</form>
+<script>
+function moveSelected(fromId, toId) {
+    var from = document.getElementById(fromId);
+    var to = document.getElementById(toId);
+    var selected = Array.from(from.selectedOptions);
+    selected.forEach(function(option) {
+        to.appendChild(option);
+    });
+}
+</script>
+</body>
+</html> 

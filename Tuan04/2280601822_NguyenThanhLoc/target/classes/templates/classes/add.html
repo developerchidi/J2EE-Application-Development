@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm Lớp học</title>
+</head>
+<body>
+<h2>Thêm Lớp học</h2>
+<form th:action="@{/classes/add}" th:object="${studentClass}" method="post">
+    <label>Tên Lớp học:</label>
+    <input type="text" th:field="*{name}" required />
+    <label>Môn học:</label>
+    <select th:field="*{subjectId}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+    </select>
+    <button type="submit">Lưu</button>
+    <a th:href="@{/classes}">Quay lại</a>
+</form>
+</body>
+</html> 

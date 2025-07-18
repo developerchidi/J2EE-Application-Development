@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách Môn học</title>
+</head>
+<body>
+<h2>Danh sách Môn học</h2>
+<a th:href="@{/subjects/add}">Thêm Môn học</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Tên Môn học</th>
+        <th>Khoa</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject : ${subjects}">
+        <td th:text="${subject.name}"></td>
+        <td th:text="${#lists.find(faculties, f -> f.id == subject.facultyId)?.name}"></td>
+        <td>
+            <a th:href="@{'/subjects/edit/' + ${subject.id}}">Sửa</a> |
+            <a th:href="@{'/subjects/delete/' + ${subject.id}}" onclick="return confirm('Xác nhận xóa?')">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/faculties}">Quản lý Khoa</a>
+</body>
+</html> 
